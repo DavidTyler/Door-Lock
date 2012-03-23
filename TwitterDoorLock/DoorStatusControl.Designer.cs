@@ -78,7 +78,6 @@
             this.Controls.Add(this.lockStatus);
             this.Name = "DoorStatusControl";
             this.Size = new System.Drawing.Size(976, 567);
-            this.Load += new System.EventHandler(this.DoorStatusControl_Load);
             this.ResumeLayout(false);
 
         }

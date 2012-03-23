@@ -42,6 +42,11 @@ namespace TwitterDoorLock
             }
         }
 
+        public bool IsKeyBound(char c)
+        {
+            return keys.ContainsKey(c);
+        }
+
         public void AddKey(char c, string message, KeyEventHandler onPress)
         {
             keys.Add(c.ToString().ToUpper().ToCharArray()[0], new Tuple<string, KeyEventHandler>(message, onPress));

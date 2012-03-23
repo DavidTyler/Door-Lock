@@ -18,12 +18,8 @@ namespace TwitterDoorLock
         {
             InitializeComponent();
             countThread = new Thread(new ThreadStart(Counter));
+            countThread.IsBackground = true;
             countThread.Start();
-        }
-
-        void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            countThread.Abort();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -94,8 +90,9 @@ namespace TwitterDoorLock
             set
             {
                 ResetTime();
+                DoorLock.Locked = !value;
                 lockStatus.BackColor = value ? StudentRndColors.Green : StudentRndColors.Red;
-                lockStatus.Text = value ? "Door unlocked" : "Door locked";
+                lockStatus.SetPropertyThreadSafe(() => lockStatus.Text, value ? "Door unlocked" : "Door locked");
             }
         }
 
@@ -107,11 +104,6 @@ namespace TwitterDoorLock
                 webStatus.BackColor = value ? StudentRndColors.Green : StudentRndColors.Red;
                 webStatus.Text = value ? "Website says Open" : "Website says Closed";
             }
-        }
-
-        private void DoorStatusControl_Load(object sender, EventArgs e)
-        {
-            this.ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
         }
     }
 }

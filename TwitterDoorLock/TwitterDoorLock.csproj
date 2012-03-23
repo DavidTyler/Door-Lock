@@ -11,7 +11,8 @@
     <RootNamespace>TwitterDoorLock</RootNamespace>
     <AssemblyName>TwitterDoorLock</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -36,7 +37,13 @@
   <PropertyGroup>
     <ApplicationIcon>twitter.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\Desktop\DoorControl\DoorControl\bin\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,9 +54,18 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Twitterizer2, Version=2.4.0.30451, Culture=neutral, PublicKeyToken=69d1469eac671567, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\DoorControl\DoorControl\bin\Release\Twitterizer2.dll</HintPath>
+    </Reference>
+    <Reference Include="Twitterizer2.Streaming, Version=2.4.0.30452, Culture=neutral, PublicKeyToken=69d1469eac671567, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\DoorControl\DoorControl\bin\Release\Twitterizer2.Streaming.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoorCommunications.cs" />
+    <Compile Include="AsyncSerial.cs" />
+    <Compile Include="DoorLock.cs" />
     <Compile Include="DoorStatusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -62,6 +78,7 @@
     <Compile Include="EventControl.Designer.cs">
       <DependentUpon>EventControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="IListener.cs" />
     <Compile Include="InvokeHelper.cs" />
     <Compile Include="KeyboardShortcutsControl.cs">
       <SubType>UserControl</SubType>
@@ -69,6 +86,8 @@
     <Compile Include="KeyboardShortcutsControl.Designer.cs">
       <DependentUpon>KeyboardShortcutsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Listeners\RfidListener.cs" />
+    <Compile Include="Listeners\TwitterListener.cs" />
     <Compile Include="LogControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -106,6 +125,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -125,7 +146,7 @@
     <Content Include="twitter.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

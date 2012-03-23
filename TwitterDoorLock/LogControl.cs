@@ -17,6 +17,7 @@ namespace TwitterDoorLock
     }
     public partial class LogControl : UserControl
     {
+        private delegate void UpdateDelegate();
         private List<Tuple<string, LogEntryType>> entries = new List<Tuple<string, LogEntryType>>();
         public LogControl()
         {
@@ -49,7 +50,15 @@ namespace TwitterDoorLock
         public void Add(string text, LogEntryType type)
         {
             entries.Add(new Tuple<string, LogEntryType>(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + text, type));
-            PerformLayout();
+            
+            // This is the stupidest method of redrawing the form, but it has to be threadsafe
+            this.Invoke(new UpdateDelegate(delegate(){
+                PerformLayout();
+                Invalidate();
+                Update();
+                Refresh();
+                Application.DoEvents();  
+            }));
         }
 
         private Color GetEntryColor(LogEntryType type)

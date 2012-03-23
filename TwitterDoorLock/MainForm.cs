@@ -24,7 +24,6 @@ namespace TwitterDoorLock
             }
         }
 
-
         public EventControl eventControl = new EventControl();
         public LogControl logControl = new LogControl();
         public DoorStatusControl doorStatusControl = new DoorStatusControl();
@@ -37,16 +36,16 @@ namespace TwitterDoorLock
             doorStatusControl.Height = 100;
             doorStatusControl.Parent = this;
             doorStatusControl.Location = new Point(0, 0);
-            doorStatusControl.Width = this.Width;
+            doorStatusControl.Width = Screen.PrimaryScreen.Bounds.Width;
 
             // Display the log
             logControl.Height = this.Height - 180;
-            logControl.Width = this.Width - 50;
+            logControl.Width = Screen.PrimaryScreen.Bounds.Width - 50;
             logControl.Parent = this;
             logControl.Location = new Point(64, 100);
 
             // Display the event control
-            eventControl.Height = this.Height - 180;
+            eventControl.Height = Screen.PrimaryScreen.Bounds.Height - 180;
             eventControl.Width = 64;
             eventControl.Parent = this;
             eventControl.Location = new Point(0, 100);
@@ -56,17 +55,13 @@ namespace TwitterDoorLock
             KeyboardShortcutsControl k = new KeyboardShortcutsControl();
             k.Height = 50;
             k.Parent = this;
-            k.Location = new Point(0, this.Height - k.Height - 30); // I have no idea why I have to subtract 30 here.
-            k.Width = this.Width;
+            k.Location = new Point(0, Screen.PrimaryScreen.Bounds.Height - k.Height); // I have no idea why I have to subtract 30 here.
+            k.Width = Screen.PrimaryScreen.Bounds.Width;
             this.KeyPreview = true;
 
-            k.AddKey('t', "Toggle Twitter Unlocks", new KeyEventHandler(delegate(object o, KeyEventArgs e){
-                eventControl.TwitterEnabled = !eventControl.TwitterEnabled;
-            }));
-
-            k.AddKey('s', "Toggle Sense Unlocks", new KeyEventHandler(delegate(object o, KeyEventArgs e)
+            k.AddKey('x', "Exit", new KeyEventHandler(delegate(object o, KeyEventArgs e)
             {
-                eventControl.SenseEnabled = !eventControl.SenseEnabled;
+                Application.Exit();
             }));
 
             k.AddKey('u', "Toggle Pushing Status Updates", new KeyEventHandler(delegate(object o, KeyEventArgs e)
